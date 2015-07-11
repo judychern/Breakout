@@ -1,3 +1,8 @@
+/* vectors.js
+ * Implements the classic Vector class
+ * Author: Judy Chern
+ */
+
 //check for integer/null in constructor
 var scaler = null;
 
