@@ -1,6 +1,6 @@
 /* vectors.js
  * Implements the classic Vector class
- * Author: Judy Chern
+ * Author: Judy Chern and spencer
  */
 
 //check for integer/null in constructor
