@@ -1,0 +1,114 @@
+var canvas = null;
+var ctx = null;
+var startX = null;
+var	startY = null;
+var moveok = null;
+var dx = null;
+var dy = null;
+var b = null;
+
+$(document).ready(function(){
+canvas = document.getElementById("myCanvas");
+ctx = canvas.getContext("2d");
+Focusable="True"
+window.addEventListener("keydown", test, false);
+canvas.addEventListener("mouseover", this.movePaddle, false);
+canvas.addEventListener("mousemove", this.movingPaddle, false);	
+});
+//put event listener function inside another function to call
+//set x and y coordinates and height and width of paddle
+var Paddle = function(x,y,height,width){
+	this.x = x;
+	this.y = y;
+	this.width = width;
+	this.height = height;
+	};
+
+Paddle.prototype.paddle_boundingBox = function(){
+	var x = this.x;
+	var y = this.y;
+	var width = this.width;
+	var height = this.height - 400;
+	return new Paddle (x,y,width,height);
+	};
+
+		
+Paddle.prototype.drawPaddle_start = function(){
+		this.x = 700;
+		this.y = 900;
+		this.width = 200;
+		this.height = 50;
+		ctx.fillRect(this.x,this.y,this.width,this.height);
+	};
+	
+Paddle.prototype.allMovement = function(){
+	
+Paddle.prototype.movePaddle = function(event1){
+	
+	event.preventDefault();
+    event.stopPropagation();
+	
+	var x = parseInt(event1.x);
+    var y = parseInt(event1.y);
+	
+	var b = this.paddle_boundingBox();
+		if (x > b.x && 
+		x < b.x + b.width && 
+		y > b.y && 
+		y < b.y + b.height){
+			moveok = true;
+			b.isMoving = true;
+			//originalPointX = b.x;
+			//originalPointY = b.y;
+		}
+	
+	startX = x;
+	startY = y;
+};
+
+Paddle.prototype.movingPaddle = function(event){
+	if(moveok) {
+	
+	var x = parseInt(event.x);
+    var y = parseInt(event.y);
+	
+	dx = x - startX;
+	dy = y - startY;
+
+		if(b.isMoving){
+			b.x += dx;
+			b.y += dy;
+			this.x += dx;
+			this.y += dy;
+		}
+	
+	
+	//redraw the new scene with new box position
+	this.reDraw();
+	
+	//reset the starting mouse position for next mouse move
+	startX = x;
+	startY = y;
+	}	
+};
+
+//clears paddle drawing
+Paddle.prototype.clear = function(){
+	ctx.clearPaddle(this.x, this.y, 200, 50);
+};
+
+Paddle.prototype.reDraw = function reDraw(){
+	
+	this.clear();
+	
+	ctx.fillRect(this.x, this.y, 200, 50);
+	
+	};
+};
+	
+function test (event){
+	var paddle1 = new Paddle();
+	paddle1.drawPaddle_start();
+	paddle1.allMovement();
+}
+
