@@ -118,7 +118,7 @@ Paddle.prototype.draw = function() {
 function test(event) {
     if (event.keyCode == 'P'.charCodeAt()) {
 
-        paddle1 = new Paddle(700, 900, 300, 50);
+        paddle1 = new Paddle(300, 290, 100, 10);
         paddle1.drawPaddle_start();
     }
 };

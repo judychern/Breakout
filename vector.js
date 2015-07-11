@@ -124,7 +124,7 @@ Vector.prototype.getTheta = function(vector2) {
 
 
 
-Vector.prototype.projection = function(incomingVelocity, planeNormal) {
+Vector.prototype.projection = function(incomingvelocity, planeNormal) {
     //vector2 is the direction of the incoming ball
 
 

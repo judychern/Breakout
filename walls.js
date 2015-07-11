@@ -1,9 +1,9 @@
 //fix wall parameters
 
 var Walls = function(wall_left, wall_top, wall_right) {
-    this.wall_left = new boundingBox(0, 0, 100, 900);
-    this.wall_top = new boundingBox(100, 0, 1400, 100);
-    this.wall_right = new boundingBox(1400, 0, 100, 900);
+    this.wall_left = new boundingBox(0, 0, 10, 300);
+    this.wall_top = new boundingBox(10, 0, 580, 10);
+    this.wall_right = new boundingBox(580, 0, 10, 300);
 };
 
 Walls.prototype.drawWalls = function(walls) {
