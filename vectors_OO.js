@@ -10,12 +10,11 @@ var Vector = function(x,y){
 	if(x!==null & y!== null){
 		this.x = x;
 		this.y = y;
-		}
-		else{
-			console.log("Enter a number!");
-			return;
-		};
-	};
+	} else{
+		console.log("Enter a number!");
+		return;
+	}
+};
 	
 	Vector.prototype.getX = function(){
 		return this.x;
@@ -120,6 +119,7 @@ var Vector = function(x,y){
 	
 	Vector.prototype.getTheta = function(vector2){
 		var theta = Math.acos((this.x*vector2.x)+(this.y*vector2.y));
+		
 		return theta;
 	};
 	
@@ -127,6 +127,7 @@ var Vector = function(x,y){
 	
 	Vector.prototype.projection = function(incomingVelocity,planeNormal){
 	//vector2 is the direction of the incoming ball
+	 var dotProduct = incomingVelocity.getDotProduct(planeNormal);
 	 
 	
 	
@@ -149,5 +150,4 @@ var Vector = function(x,y){
 	//vector1.getMagnitude();
 	
 
-	
 	
