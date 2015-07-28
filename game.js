@@ -1,5 +1,6 @@
 var canvas_width = 600;
 var canvas_height = 300;
+var canvasX = 0;
 var canvas = null;
 var ctx = null;
 var game1 = null;
@@ -21,6 +22,7 @@ var Game = function(){
 	this.objects.push(this.walls.top);
 	this.objects.push(this.walls.right);
 	this.objects.push(this.walls.left);
+	//this.objects.push(this.paddle);
 
 };
 	
@@ -86,27 +88,16 @@ Game.prototype.drawScreen = function() {
 
 Game.prototype.gameLoop = function() {
     //detects when the ball hits the paddle
-	var distance = game1.ball.center.x - game1.paddle.middle;
+	
+	
     if (detect_collide(game1.paddle)){
-//replace with reflection function
-		
-		
-        if (game1.ball.center.x > game1.paddle.middle) {
- 
-           var rotationFactor = distance / (game1.paddle.width / 2);
-		  game1.ball.velocity = game1.ball.velocity.rotate(rotationFactor * 50);
-		 game1.ball.velocity.x = game1.ball.velocity.x*-1;
-        }
-		
-        if (game1.ball.center.x < game1.paddle.middle) {
-            distance = game1.paddle.middle - game1.ball.center.x;
-            rotationFactor = distance / (game1.paddle.width / 2);
-           game1.ball.velocity = game1.ball.velocity.rotate(rotationFactor * 50);
-            //rotate vector counter clockwise
-			//game1.ball.velocity.x = game1.ball.velocity.x*-1;
-			
-        }
-		game1.ball.velocity.y = game1.ball.velocity.y*-1;
+		var paddleExtension = 1.6;
+		var distance = game1.ball.center.x - (game1.paddle.x-((game1.paddle.width*paddleExtension-game1.paddle.width)/2));
+		var rotationFactor = distance / (game1.paddle.width*paddleExtension);
+		var newVelocity = game1.ball.reverseOriginalVelocity;
+		newVelocity = newVelocity.rotate(rotationFactor*(180));
+		game1.ball.velocity = newVelocity;
+		      
 	}
 	for(var i = 0; i<game1.objects.length;i++){
 		var collidableObject = game1.objects[i];
@@ -178,7 +169,7 @@ function detect_collide(boundingBox)
 		} 
 		else if (velX < 0 && velY === 0) 
 		{
-			return right;
+			return "right";
 		} 
 		else if (velX > 0 && velY > 0) 
 		{

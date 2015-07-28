@@ -13,6 +13,7 @@ var Ball = function(radius, startAngle, endAngle, counterclockwise) {
 	
 	this.speed = 1;
 	this.direction = new Vector(0, 40);
+	this.reverseOriginalVelocity = new Vector(this.direction.y*-1,this.direction.x*-1);
     this.velocity = new Vector(this.direction.x*this.speed, this.direction.y*this.speed);
 	this.boundingCircle = new boundingBox(this.center.x - this.radius, this.center.y - this.radius, this.radius * 2, this.radius * 2);
 };
