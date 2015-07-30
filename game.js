@@ -36,7 +36,13 @@ var Game = function(){
 Game.prototype.renderBricks  = function () {
  for (var i = 0; i < this.objects.length; i++) {
   var brick = this.objects[i];
+  if (brick.isDisappearing === true){
+	 ctx.clearRect(brick.x,brick.y,brick.width,brick.height);
+	 game1.objects.splice(i,1);
+	 console.log("brick");
+  }
   brick.drawBox(brick.x, brick.y, brick.width, brick.height);
+  
  }
 };
 
@@ -120,8 +126,10 @@ Game.prototype.gameLoop = function() {
 
 function gameScreen (){
 	game1 = new Game();
-	var brick1 = new boundingBox(100,100,50,10);
+	var brick1 = new boundingBox(100,100,50,10,true);
+	var brick2 = new boundingBox(200,200,50,10,true);
 	game1.objects.push(brick1);
+	game1.objects.push(brick2);
 	game1.drawStartScreen();
 };
 
@@ -255,6 +263,12 @@ function handle_collision(ball, box, plane){
 	
 	ball.velocity.x = newDirection.x*ball.speed;
 	ball.velocity.y = newDirection.y*ball.speed;
+	
+	if(box.disappears === true){
+		//ctx.clearRect(box.x,box.y,box.width,box.height);
+		box.isDisappearing = true;
+	}
+	
 };
 
 function movingPaddle_temp(event) {

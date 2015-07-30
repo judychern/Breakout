@@ -1,4 +1,4 @@
-var boundingBox = function(x,y,width,height){
+var boundingBox = function(x,y,width,height,disappears){
 	this.x = x;
 	this.y = y;
 	this.width = width;
@@ -7,6 +7,8 @@ var boundingBox = function(x,y,width,height){
 	this.planeRight = new Vector(0, canvas_height);
 	this.planeTop = new Vector(canvas_width*-1,0);
 	this.planeBottom = new Vector(canvas_width, 0);
+	this.disappears = disappears;
+	this.isDisappearing = false; 
 	};
 	
 boundingBox.prototype.drawBox = function(boundingBox){
