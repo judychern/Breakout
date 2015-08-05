@@ -41,8 +41,9 @@ Game.prototype.renderBricks  = function () {
 	 game1.objects.splice(i,1);
 	 console.log("brick");
   }
+  else{
   brick.drawBox(brick.x, brick.y, brick.width, brick.height);
-  
+  }
  }
 };
 
@@ -126,12 +127,33 @@ Game.prototype.gameLoop = function() {
 
 function gameScreen (){
 	game1 = new Game();
-	var brick1 = new boundingBox(100,100,50,10,true);
-	var brick2 = new boundingBox(200,200,50,10,true);
-	game1.objects.push(brick1);
-	game1.objects.push(brick2);
+	//var brick1 = new boundingBox(100,100,50,10,true);
+	//var brick2 = new boundingBox(200,200,50,10,true);
+	//game1.objects.push(brick1);
+	//game1.objects.push(brick2);
+	createBricks();
 	game1.drawStartScreen();
 };
+
+function createBricks(){
+	var width = 100; var height = 10; 
+	for (var y = 0; y < 4; y++)
+	{
+		for (var x = 0; x < 10; x++)
+		{
+			game1.objects.push(new boundingBox(game1.walls.left.width + x*width, game1.walls.top.height + y*height, width, height, true));
+}
+}
+};
+	//for (var i=1; i<=4;i++){
+		//var brick = new boundingBox(game1.walls.left.wallWidth, game1.walls.top.wallWidth, 50, 10, true);
+		
+		//game1.objects.push(brick);
+		//for (var i=1; i<=9; i++){
+			
+		//}
+	//}
+
 
 function startGame(event){
 
