@@ -49,7 +49,7 @@ Paddle.prototype.reDraw = function() {
 
     this.clear();
 
-    ctx.fillRect(this.x , this.y, this.width, this.height);
+    ctx.fillRect(this.x, this.y, this.width, this.height);
 
 };
 

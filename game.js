@@ -4,6 +4,7 @@ var canvasX = 0;
 var canvas = null;
 var ctx = null;
 var game1 = null;
+var timeOut = null;
 
 $(document).ready(function() {
     canvas = document.getElementById("myCanvas");
@@ -16,12 +17,14 @@ $(document).ready(function() {
 });
 var Game = function(){
 	this.ball = new Ball(10, 0, 2 * Math.PI, false);
-	this.paddle = new Paddle(300, 290, 200, 10);
+	this.paddle = new Paddle(300, 290, 100, 10);
 	this.walls = new Walls();
+	this.bricks =[];
 	this.objects = [];
 	this.objects.push(this.walls.top);
 	this.objects.push(this.walls.right);
 	this.objects.push(this.walls.left);
+	this.lives = 0;
 	//this.objects.push(this.paddle);
 
 };
@@ -79,18 +82,7 @@ Game.prototype.drawScreen = function() {
     game1.paddle.draw();
 	game1.renderBricks();
 	
-	if(detect_collide(game1.walls.right)){
-		console.log("BOOM!");
-	}
-	
-	if(detect_collide(game1.walls.left)){
-		console.log("BOOM!");
-	}
-	
-	if(detect_collide(game1.walls.top)){
-		console.log("BOOM!");
-	}
-	window.setTimeout(game1.gameLoop,20);
+	timeOut = window.setTimeout(game1.gameLoop,20);
 };
 
 Game.prototype.gameLoop = function() {
@@ -123,6 +115,35 @@ Game.prototype.gameLoop = function() {
 		}
 	}
 	game1.drawScreen();
+
+	
+//lose one life and start from where player lost 
+	if (game1.ball.boundingCircle.y > canvas.height){
+		game1.lives++;
+		//game over and start again from current level
+		if(game1.lives > 2){
+			console.log("game over");
+			window.clearTimeout(timeOut);
+			game1.ball.center = new Vector(200, 250);
+			game1.ball.boundingCircle = new boundingBox(game1.ball.center.x - game1.ball.radius, game1.ball.center.y - game1.ball.radius, game1.ball.radius * 2, game1.ball.radius * 2);
+			//remove all bricks from array
+			for( var i = game1.objects.length-1; i>=0; i--) {
+    			if( game1.objects[i].disappears === true) {	
+    				game1.objects.splice(i,1);
+				}				
+			}	
+			createBricks();
+			game1.drawStartScreen();
+			game1.lives = 0;
+		}
+		else{
+			console.log("new life");
+			window.clearTimeout(timeOut);
+			game1.ball.center = new Vector(200, 250);
+			game1.ball.boundingCircle = new boundingBox(game1.ball.center.x - game1.ball.radius, game1.ball.center.y - game1.ball.radius, game1.ball.radius * 2, game1.ball.radius * 2);
+			game1.drawStartScreen();
+	}
+	}
 };
 
 function gameScreen (){
@@ -136,23 +157,17 @@ function gameScreen (){
 };
 
 function createBricks(){
-	var width = 100; var height = 10; 
+	var width = (canvas_width - game1.walls.left.width - game1.walls.right.width)/7; var height = (canvas_height - game1.walls.top.height)/10; 
 	for (var y = 0; y < 4; y++)
 	{
-		for (var x = 0; x < 10; x++)
+		for (var x = 0; x < 7; x++)
 		{
-			game1.objects.push(new boundingBox(game1.walls.left.width + x*width, game1.walls.top.height + y*height, width, height, true));
+			game1.objects.push(new boundingBox(game1.walls.left.width + x*width, game1.walls.top.height + (canvas_height*0.2) + y*height, width, height, true));
 }
 }
 };
-	//for (var i=1; i<=4;i++){
-		//var brick = new boundingBox(game1.walls.left.wallWidth, game1.walls.top.wallWidth, 50, 10, true);
-		
-		//game1.objects.push(brick);
-		//for (var i=1; i<=9; i++){
-			
-		//}
-	//}
+
+
 
 
 function startGame(event){
@@ -182,9 +197,7 @@ function detect_collide(boundingBox)
 	game1.ball.boundingCircle.y + game1.ball.boundingCircle.height > boundingBox.y);
 	
 	if (collide)
-	{
-		console.log("This is a collision");
-	
+	{	
 		if (velX === 0 && velY > 0)
 		{
 			return "top";
@@ -294,7 +307,7 @@ function handle_collision(ball, box, plane){
 };
 
 function movingPaddle_temp(event) {
-    x = parseInt(event.x);
+    x = parseInt(event.x)-game1.paddle.half;
     y = parseInt(event.y);
     if (game1 != null) {
         game1.paddle.movingPaddle();
