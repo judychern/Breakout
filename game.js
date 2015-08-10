@@ -19,16 +19,71 @@ var Game = function(){
 	this.ball = new Ball(10, 0, 2 * Math.PI, false);
 	this.paddle = new Paddle(300, 290, 100, 10);
 	this.walls = new Walls();
-	this.bricks =[];
+	this.level1 =[];
+	this.level2 = [];
 	this.objects = [];
 	this.objects.push(this.walls.top);
 	this.objects.push(this.walls.right);
 	this.objects.push(this.walls.left);
 	this.lives = 0;
+
 	//this.objects.push(this.paddle);
 
 };
+
+function levelMap1(){
+
+//var width = (canvas_width - game1.walls.left.width - game1.walls.right.width)/7; 
+//var height = (canvas_height - game1.walls.top.height)/15; 
 	
+	for (var y = 0; y < 4; y++)
+	{
+		for (var x = 0; x < 7; x++)
+		{
+			game1.level1.push({
+				x: x,
+				y: y,
+				//console.log(x,y);
+			})
+			console.log(x,y);
+		}
+	}
+	return game1.level1;
+		};
+
+function levelMap2(){
+
+//var width = (canvas_width - game1.walls.left.width - game1.walls.right.width)/7; 
+//var height = (canvas_height - game1.walls.top.height)/15; 
+	
+	for (var y = 0; y < 5; y++)
+	{
+		for (var x = 0; x < 7; x++)
+		{
+			if(x%2===0){
+			game1.level2.push({
+				
+				x: x,
+				y: y,
+				//console.log(x,y);
+			
+			})
+			console.log(x,y);
+		}
+	}
+	}
+	return game1.level2;
+		};
+
+function createBricks(level){
+	var width = (canvas_width - game1.walls.left.width - game1.walls.right.width)/7; 
+	var height = (canvas_height - game1.walls.top.height)/15; 
+	for (var i = 0; i < level.length; i++)
+	{
+			game1.objects.push(new boundingBox(game1.walls.left.width + level[i].x*width, game1.walls.top.height + (canvas_height*0.15) + level[i].y*height, width, height, true));
+}
+};
+
 
 // make all your bricks
 
@@ -132,7 +187,7 @@ Game.prototype.gameLoop = function() {
     				game1.objects.splice(i,1);
 				}				
 			}	
-			createBricks();
+			createBricks(levelMap2());
 			game1.drawStartScreen();
 			game1.lives = 0;
 		}
@@ -152,20 +207,13 @@ function gameScreen (){
 	//var brick2 = new boundingBox(200,200,50,10,true);
 	//game1.objects.push(brick1);
 	//game1.objects.push(brick2);
-	createBricks();
+	createBricks(levelMap2());
 	game1.drawStartScreen();
 };
 
-function createBricks(){
-	var width = (canvas_width - game1.walls.left.width - game1.walls.right.width)/7; var height = (canvas_height - game1.walls.top.height)/10; 
-	for (var y = 0; y < 4; y++)
-	{
-		for (var x = 0; x < 7; x++)
-		{
-			game1.objects.push(new boundingBox(game1.walls.left.width + x*width, game1.walls.top.height + (canvas_height*0.2) + y*height, width, height, true));
-}
-}
-};
+
+
+
 
 
 

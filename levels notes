@@ -1,0 +1,61 @@
+//each level is diff array, containing a map of the brick positions 
+//iterate over the array to switch levls
+
+/*var arr = [];
+var len = oFullResponse.results.length;
+for (var i = 0; i < len; i++) {
+    arr.push({
+        key: oFullResponse.results[i].label,
+        sortable: true,
+        resizeable: true
+    });
+}
+
+function createBricks(){
+	var width = (canvas_width - game1.walls.left.width - game1.walls.right.width)/7; var height = (canvas_height - game1.walls.top.height)/15; 
+	for (var y = 0; y < 4; y++)
+	{
+		for (var x = 0; x < 7; x++)
+		{
+			game1.objects.push(new boundingBox(game1.walls.left.width + x*width, game1.walls.top.height + (canvas_height*0.15) + y*height, width, height, true));
+}
+}
+};*/
+function level(){
+
+var level = [];
+
+//var width = (canvas_width - game1.walls.left.width - game1.walls.right.width)/7; 
+//var height = (canvas_height - game1.walls.top.height)/15; 
+	
+	for (var y = 0; y < 4; y++)
+	{
+		for (var x = 0; x < 7; x++)
+		{
+			level.push({
+				x: x;
+				y: y;
+			})
+		}
+	}
+		};
+
+level();
+
+function createBricks(level){
+	var width = (canvas_width - game1.walls.left.width - game1.walls.right.width)/7; 
+	var height = (canvas_height - game1.walls.top.height)/15; 
+	for (var i = 0; i < level.length; i++)
+	{
+			game1.objects.push(new boundingBox(game1.walls.left.width + level.[i].x*width, game1.walls.top.height + (canvas_height*0.15) + level.[i].y*height, width, height, true));
+}
+}
+};
+
+createBricks(level);
+
+
+
+
+
+
