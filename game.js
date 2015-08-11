@@ -216,12 +216,8 @@ if(count === 0) {
 	window.clearTimeout(timeOut);
 	game1.ball.center = new Vector(200, 250);
 	game1.ball.boundingCircle = new boundingBox(game1.ball.center.x - game1.ball.radius, game1.ball.center.y - game1.ball.radius, game1.ball.radius * 2, game1.ball.radius * 2);
-	for( var i = game1.objects.length-1; i>=0; i--) {
-    			if( game1.objects[i].disappears === true) {	
-    				game1.objects.splice(i,1);
-				}				
-			}	
 
+	ctx.clearRect(0,0,canvas_width,canvas_height);
 	createBricks(levelMap2());
 		
 			game1.drawStartScreen();
