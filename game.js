@@ -105,7 +105,11 @@ Game.prototype.renderBricks  = function () {
  }
 };
 
-	
+Game.prototype.reset = function(){ //end gameLoop and reset ball position
+	window.clearTimeout(timeOut);
+	game1.ball.center = new Vector(200, 250);
+	game1.ball.boundingCircle = new boundingBox(game1.ball.center.x - game1.ball.radius, game1.ball.center.y - game1.ball.radius, game1.ball.radius * 2, game1.ball.radius * 2);
+};
 	
 	
 Game.prototype.drawStartScreen = function(){
@@ -178,9 +182,7 @@ Game.prototype.gameLoop = function() {
 		//game over and start again from current level
 		if(game1.lives > 2){
 			console.log("game over");
-			window.clearTimeout(timeOut);
-			game1.ball.center = new Vector(200, 250);
-			game1.ball.boundingCircle = new boundingBox(game1.ball.center.x - game1.ball.radius, game1.ball.center.y - game1.ball.radius, game1.ball.radius * 2, game1.ball.radius * 2);
+			game1.reset();
 			//remove all bricks from array
 			for( var i = game1.objects.length-1; i>=0; i--) {
     			if( game1.objects[i].disappears === true) {	
@@ -193,9 +195,7 @@ Game.prototype.gameLoop = function() {
 		}
 		else{
 			console.log("new life");
-			window.clearTimeout(timeOut);
-			game1.ball.center = new Vector(200, 250);
-			game1.ball.boundingCircle = new boundingBox(game1.ball.center.x - game1.ball.radius, game1.ball.center.y - game1.ball.radius, game1.ball.radius * 2, game1.ball.radius * 2);
+			game1.reset();
 			game1.drawStartScreen();
 	}
 	}
@@ -213,15 +213,11 @@ Game.prototype.gameLoop = function() {
 }
 if(count === 0) {
 	console.log("next level");
-	window.clearTimeout(timeOut);
-	game1.ball.center = new Vector(200, 250);
-	game1.ball.boundingCircle = new boundingBox(game1.ball.center.x - game1.ball.radius, game1.ball.center.y - game1.ball.radius, game1.ball.radius * 2, game1.ball.radius * 2);
-
+	game1.reset();
 	ctx.clearRect(0,0,canvas_width,canvas_height);
-	createBricks(levelMap2());
-		
-			game1.drawStartScreen();
-			game1.lives = 0;
+	createBricks(levelMap2());	
+	game1.drawStartScreen();
+	game1.lives = 0;
 }
 };
 
