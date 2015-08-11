@@ -60,7 +60,7 @@ function levelMap2(){
 	{
 		for (var x = 0; x < 7; x++)
 		{
-			if(x%2===0){
+			if(x%2===0 || y === 0 || y > 3){
 			game1.level2.push({
 				
 				x: x,
@@ -187,7 +187,7 @@ Game.prototype.gameLoop = function() {
     				game1.objects.splice(i,1);
 				}				
 			}	
-			createBricks(levelMap2());
+			createBricks(levelMap1());
 			game1.drawStartScreen();
 			game1.lives = 0;
 		}
@@ -199,7 +199,36 @@ Game.prototype.gameLoop = function() {
 			game1.drawStartScreen();
 	}
 	}
+
+  for (var i=0; i<game1.objects.length; i++) {
+
+    var count= 0;
+   
+        if(game1.objects[i].disappears === true)
+        	{
+        		count++;
+      
+    }
+      
+}
+if(count === 0) {
+	console.log("next level");
+	window.clearTimeout(timeOut);
+	game1.ball.center = new Vector(200, 250);
+	game1.ball.boundingCircle = new boundingBox(game1.ball.center.x - game1.ball.radius, game1.ball.center.y - game1.ball.radius, game1.ball.radius * 2, game1.ball.radius * 2);
+	for( var i = game1.objects.length-1; i>=0; i--) {
+    			if( game1.objects[i].disappears === true) {	
+    				game1.objects.splice(i,1);
+				}				
+			}	
+
+	createBricks(levelMap2());
+		
+			game1.drawStartScreen();
+			game1.lives = 0;
+}
 };
+
 
 function gameScreen (){
 	game1 = new Game();
@@ -207,7 +236,7 @@ function gameScreen (){
 	//var brick2 = new boundingBox(200,200,50,10,true);
 	//game1.objects.push(brick1);
 	//game1.objects.push(brick2);
-	createBricks(levelMap2());
+	createBricks(levelMap1());
 	game1.drawStartScreen();
 };
 
