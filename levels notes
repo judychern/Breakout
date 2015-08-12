@@ -1,61 +1,26 @@
-//each level is diff array, containing a map of the brick positions 
-//iterate over the array to switch levls
+put each level into an array of leels
 
-/*var arr = [];
-var len = oFullResponse.results.length;
-for (var i = 0; i < len; i++) {
-    arr.push({
-        key: oFullResponse.results[i].label,
-        sortable: true,
-        resizeable: true
-    });
-}
+make a Level class and put your level array as a property of the class. Then fill your levels array with instances of each level
 
-function createBricks(){
-	var width = (canvas_width - game1.walls.left.width - game1.walls.right.width)/7; var height = (canvas_height - game1.walls.top.height)/15; 
-	for (var y = 0; y < 4; y++)
-	{
-		for (var x = 0; x < 7; x++)
-		{
-			game1.objects.push(new boundingBox(game1.walls.left.width + x*width, game1.walls.top.height + (canvas_height*0.15) + y*height, width, height, true));
-}
-}
-};*/
-function level(){
+Then you can store additional pieces of info about each level
 
-var level = [];
+Just in case that comes in handy in the future
 
-//var width = (canvas_width - game1.walls.left.width - game1.walls.right.width)/7; 
-//var height = (canvas_height - game1.walls.top.height)/15; 
-	
-	for (var y = 0; y < 4; y++)
-	{
-		for (var x = 0; x < 7; x++)
-		{
-			level.push({
-				x: x;
-				y: y;
-			})
-		}
-	}
-		};
+For instance maybe each increasing level makes the ball go faster or something so you store a speed with each level
+iterate through each level
+to progress
 
-level();
+in the Game class - STILL use the method i'm using to detect if you beat a level
+except i'm also applying the level iteration
 
-function createBricks(level){
-	var width = (canvas_width - game1.walls.left.width - game1.walls.right.width)/7; 
-	var height = (canvas_height - game1.walls.top.height)/15; 
-	for (var i = 0; i < level.length; i++)
-	{
-			game1.objects.push(new boundingBox(game1.walls.left.width + level.[i].x*width, game1.walls.top.height + (canvas_height*0.15) + level.[i].y*height, width, height, true));
-}
-}
-};
+Maybe each level could have a property to keep track of how many blocks are still alive then each iteration just check that value to see if it is 0
 
-createBricks(level);
+Update it every time a block collision is detected
 
+Except count is a property of each level
 
+but now you are putting a Level instance into the levels array
 
+A Level has a property that holds the array in it
 
-
-
+So technically levels would be an array of objects where each object has an array and some other values inside it

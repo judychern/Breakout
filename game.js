@@ -48,6 +48,7 @@ function levelMap1(){
 			console.log(x,y);
 		}
 	}
+	levels1.levels.push(game1.level1);
 	return game1.level1;
 		};
 
@@ -72,6 +73,7 @@ function levelMap2(){
 		}
 	}
 	}
+	levels1.levels.push(game1.level2);
 	return game1.level2;
 		};
 
@@ -108,6 +110,8 @@ Game.prototype.renderBricks  = function () {
 Game.prototype.reset = function(){ //end gameLoop and reset ball position
 	window.clearTimeout(timeOut);
 	game1.ball.center = new Vector(200, 250);
+	game1.direction = new Vector(0, 40);
+	game1.velocity = new Vector(this.direction.x*this.speed, this.direction.y*this.speed);
 	game1.ball.boundingCircle = new boundingBox(game1.ball.center.x - game1.ball.radius, game1.ball.center.y - game1.ball.radius, game1.ball.radius * 2, game1.ball.radius * 2);
 };
 	
@@ -190,8 +194,8 @@ Game.prototype.gameLoop = function() {
 				}				
 			}	
 			createBricks(levelMap1());
-			game1.drawStartScreen();
 			game1.lives = 0;
+			game1.drawStartScreen();
 		}
 		else{
 			console.log("new life");
@@ -224,6 +228,7 @@ if(count === 0) {
 
 function gameScreen (){
 	game1 = new Game();
+	levels1 = new level();
 	//var brick1 = new boundingBox(100,100,50,10,true);
 	//var brick2 = new boundingBox(200,200,50,10,true);
 	//game1.objects.push(brick1);
