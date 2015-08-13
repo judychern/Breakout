@@ -21,6 +21,7 @@ var Game = function(){
 	this.walls = new Walls();
 	this.level1 =[];
 	this.level2 = [];
+	this.currentLevel = 0;
 	this.objects = [];
 	this.objects.push(this.walls.top);
 	this.objects.push(this.walls.right);
@@ -30,52 +31,6 @@ var Game = function(){
 	//this.objects.push(this.paddle);
 
 };
-
-function levelMap1(){
-
-//var width = (canvas_width - game1.walls.left.width - game1.walls.right.width)/7; 
-//var height = (canvas_height - game1.walls.top.height)/15; 
-	
-	for (var y = 0; y < 4; y++)
-	{
-		for (var x = 0; x < 7; x++)
-		{
-			game1.level1.push({
-				x: x,
-				y: y,
-				//console.log(x,y);
-			})
-			console.log(x,y);
-		}
-	}
-	levels1.levels.push(game1.level1);
-	return game1.level1;
-		};
-
-function levelMap2(){
-
-//var width = (canvas_width - game1.walls.left.width - game1.walls.right.width)/7; 
-//var height = (canvas_height - game1.walls.top.height)/15; 
-	
-	for (var y = 0; y < 5; y++)
-	{
-		for (var x = 0; x < 7; x++)
-		{
-			if(x%2===0 || y === 0 || y > 3){
-			game1.level2.push({
-				
-				x: x,
-				y: y,
-				//console.log(x,y);
-			
-			})
-			console.log(x,y);
-		}
-	}
-	}
-	levels1.levels.push(game1.level2);
-	return game1.level2;
-		};
 
 function createBricks(level){
 	var width = (canvas_width - game1.walls.left.width - game1.walls.right.width)/7; 
@@ -166,16 +121,37 @@ Game.prototype.gameLoop = function() {
 		var collisionDirection = detect_collide(collidableObject);
 		if(collisionDirection==="top"){
 			handle_collision(game1.ball,collidableObject,collidableObject.planeTop);
+			if(collidableObject.isDisappearing === true){
+			Level.levels[game1.currentLevel].count--;
+			console.log(Level.levels[game1.currentLevel].count);
+			}
 		}
 		if(collisionDirection==="bottom"){
 			handle_collision(game1.ball,collidableObject,collidableObject.planeBottom);
+			if(collidableObject.isDisappearing === true){
+			Level.levels[game1.currentLevel].count--;
+			console.log(Level.levels[game1.currentLevel].count);
+			}
 		}
 		if(collisionDirection==="left"){
 			handle_collision(game1.ball,collidableObject,collidableObject.planeLeft);
+			if(collidableObject.isDisappearing === true){
+			Level.levels[game1.currentLevel].count--;
+			console.log(Level.levels[game1.currentLevel].count);
+			}
 		}
 		if(collisionDirection==="right"){
 			handle_collision(game1.ball,collidableObject,collidableObject.planeRight);
+			if(collidableObject.isDisappearing === true){
+			Level.levels[game1.currentLevel].count--;
+			console.log(Level.levels[game1.currentLevel].count);
+			}
 		}
+		/*if(game1.objects[i].disappears === true){
+			Level.levels[game1.currentLevel].count--;
+			console.log(Level.levels[game1.currentLevel].count);
+
+		}*/
 	}
 	game1.drawScreen();
 
@@ -193,7 +169,7 @@ Game.prototype.gameLoop = function() {
     				game1.objects.splice(i,1);
 				}				
 			}	
-			createBricks(levelMap1());
+			createBricks(Level.levels[game1.currentLevel].bricks);
 			game1.lives = 0;
 			game1.drawStartScreen();
 		}
@@ -202,24 +178,14 @@ Game.prototype.gameLoop = function() {
 			game1.reset();
 			game1.drawStartScreen();
 	}
-	}
+	}    
 
-  for (var i=0; i<game1.objects.length; i++) {
-
-    var count= 0;
-   
-        if(game1.objects[i].disappears === true)
-        	{
-        		count++;
-      
-    }
-      
-}
-if(count === 0) {
+if(Level.levels[game1.currentLevel].count === 0) {
 	console.log("next level");
+	game1.currentLevel++;
 	game1.reset();
 	ctx.clearRect(0,0,canvas_width,canvas_height);
-	createBricks(levelMap2());	
+	createBricks(Level.levels[game1.currentLevel].bricks);	
 	game1.drawStartScreen();
 	game1.lives = 0;
 }
@@ -228,12 +194,14 @@ if(count === 0) {
 
 function gameScreen (){
 	game1 = new Game();
-	levels1 = new level();
+	Level = new level();
+	Level.levels.push(new levelMap1());
+	Level.levels.push(new levelMap2());
 	//var brick1 = new boundingBox(100,100,50,10,true);
 	//var brick2 = new boundingBox(200,200,50,10,true);
 	//game1.objects.push(brick1);
 	//game1.objects.push(brick2);
-	createBricks(levelMap1());
+	createBricks(Level.levels[game1.currentLevel].bricks);
 	game1.drawStartScreen();
 };
 

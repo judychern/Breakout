@@ -23,4 +23,17 @@ but now you are putting a Level instance into the levels array
 
 A Level has a property that holds the array in it
 
-So technically levels would be an array of objects where each object has an array and some other values inside it
+So technically levels would be an array of objects where **each object has an array and some other values inside it**
+
+Initialize the value of count to the number of blocks in the Level when you declare the Level. Then every time you hit a brick decrease count by one. Then just check to see if count === 0 and if it is increase level by one
+
+Var currentlevel = 0; if levels[currentlevel].count === 0 {currentlevel++} loadLevel(levels[currentlevel]);
+
+Either a) store level one in index location 0 in the levels array then access it with currentlevel - 1. Or b) store level one in index location one a d store something meaningless in index location 0
+
+Levels[1] = levelone
+
+Levels[2] = leveltwo
+
+Var currentlevel = 1; Levels[currentlevel] === levelone
+
