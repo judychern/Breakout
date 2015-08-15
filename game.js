@@ -19,8 +19,6 @@ var Game = function(){
 	this.ball = new Ball(10, 0, 2 * Math.PI, false);
 	this.paddle = new Paddle(300, 290, 100, 10);
 	this.walls = new Walls();
-	this.level1 =[];
-	this.level2 = [];
 	this.currentLevel = 0;
 	this.objects = [];
 	this.objects.push(this.walls.top);

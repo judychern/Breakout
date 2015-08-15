@@ -13,12 +13,10 @@ var levelMap1 = function (){
 			this.bricks.push({
 				x: x,
 				y: y,
-				//console.log(x,y);
 			})
 			console.log(x,y);
 		}
 	}
-	//return game1.level1;
 		};
 
 var levelMap2 = function (){
@@ -35,11 +33,9 @@ var levelMap2 = function (){
 				
 				x: x,
 				y: y,
-			
 			})
 			console.log(x,y);
 		}
 	}
 	}
-	
 		};
